@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registro — Arte sin límites</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --white: #ffffff;
+      --black: #000000;
+      --gray-50: #f8f8f8;
+      --gray-100: #f0f0f0;
+      --gray-200: #e0e0e0;
+      --gray-400: #999999;
+      --gray-600: #666666;
+      --font: 'Inter', sans-serif;
+      --nav-h: 56px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--gray-50);
+      color: var(--black);
+      font-family: var(--font);
+      font-size: 16px;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-200);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+    }
+
+    .nav-logo {
+      font-size: 1rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: var(--black);
+      text-decoration: none;
+    }
+
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--gray-600);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .nav-back:hover { color: var(--black); }
+
+    .nav-back svg {
+      width: 15px; height: 15px;
+      stroke: currentColor;
+      fill: none;
+    }
+
+    /* ── LAYOUT ── */
+    .page {
+      min-height: 100vh;
+      padding-top: var(--nav-h);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* ── PANEL IZQUIERDO ── */
+    .panel-left {
+      background: var(--black);
+      color: var(--white);
+      padding: 4rem 3.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: sticky;
+      top: var(--nav-h);
+      height: calc(100vh - var(--nav-h));
+      overflow: hidden;
+    }
+
+    .panel-left::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=900&q=80') center/cover no-repeat;
+      opacity: 0.18;
+    }
+
+    .panel-left > * { position: relative; z-index: 1; }
+
+    .panel-badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 1.2rem;
+    }
+
+    .panel-title {
+      font-size: clamp(2.4rem, 4vw, 3.8rem);
+      font-weight: 900;
+      line-height: 0.92;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.2rem;
+    }
+
+    .panel-desc {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.7;
+      max-width: 340px;
+      margin-bottom: 2.5rem;
+    }
+
+    .panel-benefits {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .panel-benefits li {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.75);
+    }
+
+    .benefit-check {
+      width: 20px; height: 20px;
+      border: 1.5px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .benefit-check svg {
+      width: 10px; height: 10px;
+      stroke: var(--white);
+      fill: none;
+    }
+
+    .panel-footer {
+      margin-top: auto;
+      padding-top: 2.5rem;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.25);
+    }
+
+    /* ── PANEL DERECHO ── */
+    .panel-right {
+      background: var(--gray-50);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 2.5rem;
+    }
+
+    .form-wrap {
+      width: 100%;
+      max-width: 440px;
+    }
+
+    .form-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 14px;
+      padding: 2.2rem 2rem;
+    }
+
+    .form-card h2 {
+      font-size: 1.35rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.3rem;
+    }
+
+    .form-subtitle {
+      font-size: 0.82rem;
+      color: var(--gray-600);
+      margin-bottom: 1.8rem;
+    }
+
+    /* Campos */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.38rem;
+    }
+
+    .form-group.full { grid-column: 1 / -1; }
+
+    .form-group label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--gray-600);
+    }
+
+    .form-group input,
+    .form-group select {
+      font-family: var(--font);
+      font-size: 0.9rem;
+      color: var(--black);
+      background: var(--gray-50);
+      border: 1.5px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 0.72rem 0.9rem;
+      outline: none;
+      transition: border-color 0.15s, background 0.15s;
+      width: 100%;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: var(--black);
+      background: var(--white);
+    }
+
+    .form-group input.error { border-color: #e53e3e; }
+    .form-group input::placeholder { color: var(--gray-400); }
+
+    .error-msg {
+      font-size: 0.7rem;
+      color: #e53e3e;
+      display: none;
+      margin-top: 0.1rem;
+    }
+
+    .form-group.has-error .error-msg { display: block; }
+    .form-group.has-error input { border-color: #e53e3e; }
+
+    .form-group select {
+      appearance: none;
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.9rem center;
+      padding-right: 2.2rem;
+    }
+
+    /* Botón */
+    .form-submit {
+      width: 100%;
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font);
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.95rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 1.2rem;
+      transition: opacity 0.2s, transform 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+    }
+
+    .form-submit:hover { opacity: 0.85; transform: translateY(-1px); }
+    .form-submit:active { transform: translateY(0); }
+    .form-submit.loading { opacity: 0.55; pointer-events: none; }
+
+    .form-submit svg {
+      width: 16px; height: 16px;
+      stroke: currentColor; fill: none;
+    }
+
+    .form-note {
+      font-size: 0.72rem;
+      color: var(--gray-400);
+      text-align: center;
+      margin-top: 1rem;
+      line-height: 1.55;
+    }
+
+    /* Divisor "¿ya tienes cuenta?" */
+    .form-divider {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin: 1.4rem 0 1.2rem;
+    }
+
+    .form-divider span {
+      flex: 1;
+      height: 1px;
+      background: var(--gray-200);
+    }
+
+    .form-divider p {
+      font-size: 0.75rem;
+      color: var(--gray-400);
+      white-space: nowrap;
+    }
+
+    .btn-gallery {
+      display: block;
+      text-align: center;
+      border: 1.5px solid var(--gray-200);
+      color: var(--black);
+      background: none;
+      font-family: var(--font);
+      font-size: 0.84rem;
+      font-weight: 600;
+      padding: 0.8rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .btn-gallery:hover { border-color: var(--black); background: var(--gray-50); }
+
+    /* ── ESTADO ÉXITO ── */
+    .form-success {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 2.5rem 1rem;
+      gap: 1rem;
+    }
+
+    .form-success.show { display: flex; }
+
+    .success-icon {
+      width: 60px; height: 60px;
+      background: var(--black);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .success-icon svg { width: 28px; height: 28px; stroke: white; fill: none; }
+
+    .success-title {
+      font-size: 1.3rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+    }
+
+    .success-desc {
+      font-size: 0.86rem;
+      color: var(--gray-600);
+      line-height: 1.65;
+      max-width: 300px;
+    }
+
+    .success-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--black);
+      text-decoration: none;
+      margin-top: 0.5rem;
+      border-bottom: 1.5px solid var(--black);
+      padding-bottom: 1px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 780px) {
+      .page { grid-template-columns: 1fr; }
+
+      .panel-left {
+        position: static;
+        height: auto;
+        padding: 3rem 1.5rem;
+        min-height: 260px;
+      }
+
+      .panel-right { padding: 2rem 1.25rem; }
+      .form-wrap { max-width: 100%; }
+    }
+
+    @media (max-width: 480px) {
+      .form-row { grid-template-columns: 1fr; }
+      .panel-title { font-size: 2.4rem; }
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">Arte sin límites</a>
+  <a href="galeria.html" class="nav-back">
+    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    Volver a la galería
+  </a>
+</nav>
+
+<!-- PÁGINA DOS COLUMNAS -->
+<div class="page">
+
+  <!-- Izquierda: presentación -->
+  <div class="panel-left">
+    <div class="panel-badge">Comunidad</div>
+    <h1 class="panel-title">Únete a la comunidad</h1>
+    <p class="panel-desc">Regístrate y accede a obras exclusivas, alertas de nuevos artistas y novedades antes que nadie.</p>
+
+    <ul class="panel-benefits">
+      <li>
+        <span class="benefit-check"><svg viewBox="0 0 24 24" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+        Acceso anticipado a nuevas obras
+      </li>
+      <li>
+        <span class="benefit-check"><svg viewBox="0 0 24 24" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+        Notificaciones de artistas que sigues
+      </li>
+      <li>
+        <span class="benefit-check"><svg viewBox="0 0 24 24" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+        Historial de compras y favoritos
+      </li>
+      <li>
+        <span class="benefit-check"><svg viewBox="0 0 24 24" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+        Sin spam — solo arte
+      </li>
+    </ul>
+
+    <p class="panel-footer">Arte sin límites · Plataforma de arte independiente</p>
+  </div>
+
+  <!-- Derecha: formulario -->
+  <div class="panel-right">
+    <div class="form-wrap">
+      <div class="form-card" id="formCard">
+
+        <!-- CAMPOS -->
+        <div id="formFields">
+          <h2>Crear cuenta</h2>
+          <p class="form-subtitle">Completa tus datos para registrarte. Gratis y sin compromiso.</p>
+
+          <div class="form-row">
+            <div class="form-group" id="g-nombre">
+              <label for="f-nombre">Nombre</label>
+              <input type="text" id="f-nombre" placeholder="Ej. María" autocomplete="given-name" />
+              <span class="error-msg">Campo obligatorio</span>
+            </div>
+            <div class="form-group" id="g-apellido">
+              <label for="f-apellido">Apellidos</label>
+              <input type="text" id="f-apellido" placeholder="Ej. García López" autocomplete="family-name" />
+              <span class="error-msg">Campo obligatorio</span>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group full" id="g-email">
+              <label for="f-email">Correo electrónico</label>
+              <input type="email" id="f-email" placeholder="correo@ejemplo.com" autocomplete="email" />
+              <span class="error-msg">Ingresa un correo válido</span>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group full">
+              <label for="f-interes">¿Qué tipo de arte te interesa?</label>
+              <select id="f-interes">
+                <option value="" disabled selected>Selecciona una opción</option>
+                <option value="Pintura">Pintura</option>
+                <option value="Ilustración digital">Ilustración digital</option>
+                <option value="Fotografía">Fotografía</option>
+                <option value="Escultura">Escultura</option>
+                <option value="Arte urbano">Arte urbano</option>
+                <option value="Otro">Otro</option>
+              </select>
+            </div>
+          </div>
+
+          <button class="form-submit" id="formSubmitBtn" type="button" onclick="submitToGoogleForms()">
+            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Registrarme ahora
+          </button>
+
+          <p class="form-note">
+            Al registrarte aceptas recibir comunicaciones de Arte sin límites.<br/>
+            Tu información se almacena de forma segura.
+          </p>
+
+          <div class="form-divider">
+            <span></span><p>¿Solo quieres explorar?</p><span></span>
+          </div>
+
+          <a href="index.html" class="btn-gallery">Ver la galería sin registrarse</a>
+        </div>
+
+        <!-- ÉXITO -->
+        <div class="form-success" id="formSuccess">
+          <div class="success-icon">
+            <svg viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="success-title">¡Registro completado!</div>
+          <p class="success-desc">Gracias por unirte. Hemos guardado tu información correctamente. Pronto recibirás novedades en tu correo.</p>
+          <a href="index.html" class="success-link">
+            Explorar la galería →
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- iframe oculto para absorber respuesta de Google Forms sin redirigir -->
+<iframe name="hidden_iframe" style="display:none;" aria-hidden="true"></iframe>
+
+<script>
+  // ─────────────────────────────────────────────
+  //  CONFIGURACIÓN GOOGLE FORMS
+  //  Reemplaza los entry.XXXXXXXXX con los IDs
+  //  reales de tu formulario.
+  //
+  //  Cómo obtenerlos:
+  //  1. Abre tu formulario en el navegador
+  //  2. Clic derecho → Ver código fuente (Ctrl+U)
+  //  3. Busca "entry." con Ctrl+F
+  //  4. Copia el número de cada campo
+  // ─────────────────────────────────────────────
+  const FORM_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLSeezHTnTV3G-KKgNWedA47hVjUHeBeyO29aZyi-i-EbQKGE5Q/formResponse';
+
+  const ENTRY = {
+    nombre:   'entry.XXXXXXXXX',   // ← reemplaza con el ID del campo Nombre
+    apellido: 'entry.XXXXXXXXX',   // ← reemplaza con el ID del campo Apellidos
+    email:    'entry.XXXXXXXXX',   // ← reemplaza con el ID del campo Correo
+    interes:  'entry.XXXXXXXXX',   // ← reemplaza con el ID del campo Interés
+  };
+
+  function submitToGoogleForms() {
+    const nombre   = document.getElementById('f-nombre').value.trim();
+    const apellido = document.getElementById('f-apellido').value.trim();
+    const email    = document.getElementById('f-email').value.trim();
+    const interes  = document.getElementById('f-interes').value;
+
+    // Validación
+    let valid = true;
+
+    setError('g-nombre',   !nombre,                       'Campo obligatorio');
+    setError('g-apellido', !apellido,                      'Campo obligatorio');
+    setError('g-email',    !email || !isValidEmail(email), !email ? 'Campo obligatorio' : 'Ingresa un correo válido');
+
+    if (!nombre || !apellido || !email || !isValidEmail(email)) return;
+
+    // Estado cargando
+    const btn = document.getElementById('formSubmitBtn');
+    btn.classList.add('loading');
+    btn.innerHTML = `<svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="animation:spin .8s linear infinite;stroke:#fff;fill:none;width:16px;height:16px"><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0"/></svg> Enviando...`;
+
+    // Crear form oculto y hacer POST al iframe
+    const form = document.createElement('form');
+    form.method  = 'POST';
+    form.action  = FORM_ACTION;
+    form.target  = 'hidden_iframe';
+
+    const data = [
+      [ENTRY.nombre,   nombre],
+      [ENTRY.apellido, apellido],
+      [ENTRY.email,    email],
+      [ENTRY.interes,  interes],
+    ];
+
+    data.forEach(([name, value]) => {
+      if (!name.includes('XXXXX')) {
+        const input = document.createElement('input');
+        input.type  = 'hidden';
+        input.name  = name;
+        input.value = value;
+        form.appendChild(input);
+      }
+    });
+
+    document.body.appendChild(form);
+    form.submit();
+    document.body.removeChild(form);
+
+    // Mostrar pantalla de éxito
+    setTimeout(() => {
+      document.getElementById('formFields').style.display = 'none';
+      document.getElementById('formSuccess').classList.add('show');
+    }, 1200);
+  }
+
+  function setError(groupId, hasError, msg) {
+    const group = document.getElementById(groupId);
+    const msgEl = group.querySelector('.error-msg');
+    if (hasError) {
+      group.classList.add('has-error');
+      if (msg) msgEl.textContent = msg;
+    } else {
+      group.classList.remove('has-error');
+    }
+  }
+
+  function isValidEmail(e) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
+  }
+
+  // Limpiar errores al escribir
+  ['f-nombre', 'f-apellido', 'f-email'].forEach(id => {
+    document.getElementById(id).addEventListener('input', function () {
+      const group = this.closest('.form-group');
+      group.classList.remove('has-error');
+    });
+  });
+</script>
+</body>
+</html>
